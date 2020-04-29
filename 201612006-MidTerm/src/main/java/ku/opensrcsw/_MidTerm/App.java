@@ -13,6 +13,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import midterm.problem2.RegularExpression;
+
 /**
  * Hello world!
  *
@@ -21,12 +23,14 @@ public class App
 {
     public static void main( String[] args )
     {
+    	 RegularExpression re = new RegularExpression();
+    	
     	
 		JSONParser jsonParser = new JSONParser();
 		Object jsonObject = null;
 		try {
 			try {
-				jsonObject = (JSONObject) jsonParser.parse(new FileReader("/midterm.json"));
+				jsonObject = (JSONObject) jsonParser.parse(new FileReader("midterm.json"));
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -41,11 +45,12 @@ public class App
 		}
 		System.out.print("Enter the patterm you are looking for : ");
 		Scanner scan = new Scanner(System.in);
-		int temp = scan.nextInt();
+		String temp = scan.next();
 		Object infoArray = ((JSONArray) jsonObject).get(temp);
 		for(int i =0;i<((ArrayList) infoArray).size();i++) {
-			JSONObject itemObject = (JSONObject) ((ArrayList) infoArray).get(i);
-			System.out.println(itemObject.get("item"));
+			if(re.check((String)infoArray, temp)) {
+				System.out.println(infoArray);
+			}
 
 		}
     }
